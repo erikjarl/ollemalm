@@ -54,47 +54,55 @@
                     </div>
                     
                    <div class="contact-form">
-    <h3>Kontaktformulär</h3>
-    <form
-        id="contactForm"
-        action="https://formspree.io/f/meolnqvb"
-        method="POST"
-    >
-        <label>
-            Ange din mejladress
-            <input type="email" name="email" required>
-        </label>
-        <label>
-            Ange ditt telefonnummer
-            <textarea name="message" required></textarea>
-        </label>
+  <h3>Kontaktformulär</h3>
+  <form
+    id="contactForm"
+    action="https://formspree.io/f/meolnqvb"
+    method="POST"
+  >
+    <label>
+      Ange din mejladress
+      <input type="email" name="email" required>
+    </label>
 
-        <div class="gdpr-container" style="display: flex; align-items: flex-start; gap: 8 px; margin-top: 8 px;">
-            <input type="checkbox" id="GDPR" name="GDPR" style="margin-top: 3 px;">
-            <div>
-                <label for="GDPR">Jag godkänner att min data lagras i enlighet med GDPR</label>
-                <span id="gdprError" style="color: red; font-size: 0.9 em; display: none; margin-left: 6 px;">
-                    (Du måste godkänna)
-                </span>
-            </div>
-        </div>
+    <label>
+      Ange ditt telefonnummer
+      <textarea name="message" required></textarea>
+    </label>
 
-        <button type="submit">Skicka</button>
-    </form>
+    <!-- GDPR: checkbox + text + felmeddelande på SAMMA rad utan onödigt mellanrum -->
+    <label class="gdpr-inline" style="display:inline-block; margin-top:8px;">
+      <input type="checkbox" id="GDPR" name="GDPR" style="margin-right:6px;">
+      Jag godkänner att min data lagras i enlighet med GDPR
+      <span id="gdprError" style="display:none; margin-left:6px; color:#c62828; font-size:0.9em;">
+        (Du måste godkänna)
+      </span>
+    </label>
+
+    <button type="submit">Skicka</button>
+  </form>
 </div>
 
 <script>
-document.getElementById("contactForm").addEventListener("submit", function(event) {
-    const gdprCheck = document.getElementById("GDPR");
-    const gdprError = document.getElementById("gdprError");
+  const form = document.getElementById("contactForm");
+  const gdprCheck = document.getElementById("GDPR");
+  const gdprError = document.getElementById("gdprError");
 
+  form.addEventListener("submit", function (event) {
     if (!gdprCheck.checked) {
-        event.preventDefault(); // stoppa formuläret
-        gdprError.style.display = "inline"; // visa felmeddelandet
+      event.preventDefault();
+      gdprError.style.display = "inline";
+      // valfritt: flytta fokus till checkboxen
+      gdprCheck.focus();
     } else {
-        gdprError.style.display = "none"; // göm felmeddelandet
+      gdprError.style.display = "none";
     }
-});
+  });
+
+  // Göm felmeddelandet så fort användaren kryssar i
+  gdprCheck.addEventListener("change", function () {
+    if (gdprCheck.checked) gdprError.style.display = "none";
+  });
 </script>
 
                 </div>
