@@ -68,12 +68,12 @@
             <textarea name="message" required></textarea>
         </label>
 
-        <div class="gdpr-container">
+        <div class="gdpr-container" style="display: flex; align-items: center; gap: 8px;">
             <input type="checkbox" id="GDPR" name="GDPR">
             <label for="GDPR">Jag godkänner att min data lagras i enlighet med GDPR</label>
-            <p id="gdprError" style="color: red; font-size: 0.9em; display: none;">
-                Du måste godkänna GDPR innan du kan skicka formuläret.
-            </p>
+            <span id="gdprError" style="color: red; font-size: 0.9em; display: none;">
+                (Du måste godkänna)
+            </span>
         </div>
 
         <button type="submit">Skicka</button>
@@ -87,7 +87,7 @@ document.getElementById("contactForm").addEventListener("submit", function(event
 
     if (!gdprCheck.checked) {
         event.preventDefault(); // stoppa formuläret
-        gdprError.style.display = "block"; // visa felmeddelandet
+        gdprError.style.display = "inline"; // visa felmeddelandet på samma rad
     } else {
         gdprError.style.display = "none"; // göm felmeddelandet om allt är okej
     }
