@@ -53,26 +53,46 @@
                     </div>
                     
                     <div class="contact-form">
-                        <h3>Kontaktformulär</h3>
-                       <form
- 						 action="https://formspree.io/f/meolnqvb"
-						  method="POST"
-						>
- 					 <label>
-    				Ange din mejladress
-    				<input type="email" name="email">
-  					</label>
-  					<label>
-    				Ange ditt telefonummer
-    				<textarea name="message"></textarea>
- 					 </label>
-					<input type="checkbox" id="GDPR" 
-						name="GDPR"> 
-					<label for="GDPR">Jag godkänner att min data lagras i enliget med GDPR</label>
- 						 <!-- your other form fields go here -->
- 						 <button type="submit">Skicka</button>
-						</form>
-                    </div>
+    <h3>Kontaktformulär</h3>
+    <form
+        id="contactForm"
+        action="https://formspree.io/f/meolnqvb"
+        method="POST"
+    >
+        <label>
+            Ange din mejladress
+            <input type="email" name="email" required>
+        </label>
+        <label>
+            Ange ditt telefonnummer
+            <textarea name="message" required></textarea>
+        </label>
+
+        <div class="gdpr-container">
+            <input type="checkbox" id="GDPR" name="GDPR">
+            <label for="GDPR">Jag godkänner att min data lagras i enlighet med GDPR</label>
+            <p id="gdprError" style="color: red; font-size: 0.9em; display: none;">
+                Du måste godkänna GDPR innan du kan skicka formuläret.
+            </p>
+        </div>
+
+        <button type="submit">Skicka</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(event) {
+    const gdprCheck = document.getElementById("GDPR");
+    const gdprError = document.getElementById("gdprError");
+
+    if (!gdprCheck.checked) {
+        event.preventDefault(); // stoppa formuläret
+        gdprError.style.display = "block"; // visa felmeddelandet
+    } else {
+        gdprError.style.display = "none"; // göm felmeddelandet om allt är okej
+    }
+});
+</script>
                 </div>
             </div>
         </section>
