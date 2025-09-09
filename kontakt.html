@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -52,42 +53,26 @@
                     </div>
                     
                     <div class="contact-form">
-        <h3>Kontaktformulär</h3>
-        <form action="https://formspree.io/f/meo1nqvb" method="POST">
-            <label>
-                Ange din mejladress
-                <input type="email" name="email">
-            </label>
-
-            <label>
-                Ange ditt telefonnummer
-                <input type="tel" name="phone">
-            </label>
-
-            <label>
-                Meddelande
-                <textarea name="message"></textarea>
-            </label>
-
-            <label>
-                <input type="checkbox" id="GDPR" name="GDPR">
-                Jag godkänner att min data lagras i enlighet med GDPR
-            </label>
-
-          
-<script>  document.getElementById('kontaktForm').addEventListener('submit', function(event) {
-    const samtycke = document.getElementById('GDPR');
-    if (!samtycke.checked) {
-        event.preventDefault();
-        alert('Du måste godkänna datalagring enligt GDPR för att skicka formuläret.');
-    }
-});
-</script> -->
-
-            <button type="submit" id="submit" name="submit">Skicka</button>
-        </form>
-    </div>
-
+                        <h3>Kontaktformulär</h3>
+                       <form
+ 						 action="https://formspree.io/f/meolnqvb"
+						  method="POST"
+						>
+ 					 <label>
+    				Ange din mejladress
+    				<input type="email" name="email">
+  					</label>
+  					<label>
+    				Ange ditt telefonummer
+    				<textarea name="message"></textarea>
+ 					 </label>
+					<input type="checkbox" id="GDPR" 
+						name="GDPR"> 
+					<label for="GDPR">Jag godkänner att min data lagras i enliget med GDPR</label>
+ 						 <!-- your other form fields go here -->
+ 						 <button type="submit">Skicka</button>
+						</form>
+                    </div>
                 </div>
             </div>
         </section>
