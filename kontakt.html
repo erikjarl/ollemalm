@@ -52,11 +52,66 @@
                         
                         <p>Det första mötet är ett bedömningssamtal där vi tillsammans utforskar dina behov och om psykoanalytisk terapi är rätt för dig. Kontakta mig gärna via telefon eller e-post för att boka tid eller om du har frågor.</p>
                     </div>
-                    
-                   <div class="contact-form">
+                 <div class="contact-form">
   <h3>Kontaktformulär</h3>
 
+  <!-- START: ersätt detta formulär -->
   <form id="contactForm" action="https://formspree.io/f/meolnqvb" method="POST" novalidate>
+    <!-- Lokal CSS som har hög specifikitet och "scope" till formuläret -->
+    <style>
+      /* Scope: endast påverka element inuti #contactForm */
+      #contactForm * { box-sizing: border-box; }
+      #contactForm .field { display: block; margin: 0 0 12px 0; }
+      #contactForm .field > input,
+      #contactForm .field > textarea {
+        width: 100%;
+        display: block;
+        padding: 10px;
+        border: 1px solid #dcdcdc;
+        border-radius: 6px;
+        font: inherit;
+      }
+      /* GDPR-raden: checkbox till vänster exakt under input/start av textarea */
+      #contactForm .gdpr-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 10px;
+        margin-left: 0; /* säkerställ ingen extra indragning */
+      }
+      /* finjustera checkboxens vertikala placering så den matchar input-toppen */
+      #contactForm .gdpr-row .checkbox {
+        margin: 6px 0 0 0; /* flytta ner lite så den sitter på samma baseline */
+        flex: 0 0 auto;
+      }
+      #contactForm .gdpr-row .gdpr-text {
+        flex: 1 1 auto;
+        line-height: 1.25;
+      }
+      #contactForm #gdprError {
+        display: none;
+        color: #c62828;
+        font-size: 0.9rem;
+        margin-left: 8px;
+        align-self: center;
+      }
+      /* mobilfallback: låt feltext hamna under texten vid smal skärm */
+      @media (max-width: 420px) {
+        #contactForm .gdpr-row { flex-wrap: wrap; }
+        #contactForm #gdprError { width: 100%; margin-left: 0; margin-top: 6px; align-self: flex-start; }
+      }
+      /* Button styling (enkel) */
+      #contactForm button[type="submit"] {
+        margin-top: 12px;
+        padding: 10px 16px;
+        border-radius: 6px;
+        border: none;
+        background: #111;
+        color: #fff;
+        cursor: pointer;
+      }
+    </style>
+
     <label class="field">
       Ange din mejladress
       <input type="email" name="email" required>
@@ -64,78 +119,60 @@
 
     <label class="field">
       Ange ditt telefonnummer
-      <textarea name="message" required></textarea>
+      <textarea name="message" rows="4" required></textarea>
     </label>
 
-    <!-- GDPR-rad: placeras dynamiskt så checkboxen börjar under textarea-starten -->
-    <div id="gdprContainer" style="display:flex; align-items:center; gap:6px; margin-top:8px;">
-      <input id="GDPR" name="GDPR" type="checkbox" style="margin:0; vertical-align:middle;">
-      <label for="GDPR" style="margin:0; line-height:1.2;">
-        Jag godkänner att min data lagras i enlighet med GDPR
-      </label>
-      <span id="gdprError" style="display:none; color:#c62828; font-size:0.9em; margin-left:8px;">
-        (Du måste godkänna)
-      </span>
+    <!-- GDPR-rad: checkbox längst till vänster under textarea-starten -->
+    <div class="gdpr-row" aria-live="polite">
+      <input class="checkbox" id="GDPR" name="GDPR" type="checkbox" />
+      <div class="gdpr-text">
+        <label for="GDPR">Jag godkänner att min data lagras i enlighet med GDPR</label>
+      </div>
+      <span id="gdprError" role="alert">(Du måste godkänna)</span>
     </div>
 
-    <button type="submit" style="margin-top:12px;">Skicka</button>
+    <button type="submit">Skicka</button>
   </form>
+  <!-- END: ersatt formulär -->
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('contactForm');
-  const textarea = form.querySelector('textarea');
-  const gdprContainer = document.getElementById('gdprContainer');
-  const gdprCheck = document.getElementById('GDPR');
-  const gdprError = document.getElementById('gdprError');
+  // Enkel, tydlig validering (ersätter eventuella tidigare scripts för detta formulär)
+  (function () {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    const gdpr = document.getElementById('GDPR');
+    const err = document.getElementById('gdprError');
 
-  // Funktion som placerar gdpr-raden så att den börjar i samma x-position som textarea
-  function alignGdprRow() {
-    if (!textarea || !gdprContainer || !form) return;
+    form.addEventListener('submit', function (e) {
+      // HTML5-validitet: låt browsern markera om email/textarea saknas
+      if (!form.checkValidity()) {
+        // Låt browsern visa sina valideringsmeddelanden först
+        return;
+      }
 
-    // beräkna vänsterkanten för textarea relativt formuläret
-    const textareaRect = textarea.getBoundingClientRect();
-    const formRect = form.getBoundingClientRect();
-    const left = Math.max(0, textareaRect.left - formRect.left);
+      if (!gdpr.checked) {
+        e.preventDefault();
+        err.style.display = 'inline';
+        gdpr.setAttribute('aria-invalid', 'true');
+        // scrolla så användaren ser felet (smoother)
+        gdpr.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        gdpr.focus();
+      } else {
+        err.style.display = 'none';
+        gdpr.removeAttribute('aria-invalid');
+        // formuläret skickas — Formspree hanterar resten
+      }
+    });
 
-    // om formulärets bredd är liten (mobil), lägg tillbaka till 0 för att undvika overflow
-    if (form.clientWidth < 420) {
-      gdprContainer.style.marginLeft = '0px';
-      gdprContainer.style.flexWrap = 'wrap';
-      return;
-    }
-
-    gdprContainer.style.marginLeft = left + 'px';
-    gdprContainer.style.flexWrap = 'nowrap';
-  }
-
-  // Kör vid start och vid storleksändring
-  alignGdprRow();
-  window.addEventListener('resize', alignGdprRow);
-
-  // Validering: visa röd text om inte ikryssad
-  form.addEventListener('submit', function (e) {
-    if (!gdprCheck.checked) {
-      e.preventDefault();
-      gdprError.style.display = 'inline';
-      gdprCheck.focus();
-      // säkerställ att raden ligger rätt (kan behövas om fokus scrollar)
-      alignGdprRow();
-    } else {
-      gdprError.style.display = 'none';
-    }
-  });
-
-  // Dölj feltext så fort användaren kryssar i
-  gdprCheck.addEventListener('change', function () {
-    if (gdprCheck.checked) gdprError.style.display = 'none';
-  });
-});
+    // Dölj feltext när användaren kryssar i
+    gdpr.addEventListener('change', function () {
+      if (gdpr.checked) err.style.display = 'none';
+    });
+  })();
 </script>
-
-
-
+   
+                 
                 </div>
             </div>
         </section>
