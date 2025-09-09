@@ -52,7 +52,7 @@
                         <p>Det första mötet är ett bedömningssamtal där vi tillsammans utforskar dina behov och om psykoanalytisk terapi är rätt för dig. Kontakta mig gärna via telefon eller e-post för att boka tid eller om du har frågor.</p>
                     </div>
                     
-                    <div class="contact-form">
+                   <div class="contact-form">
     <h3>Kontaktformulär</h3>
     <form
         id="contactForm"
@@ -68,12 +68,14 @@
             <textarea name="message" required></textarea>
         </label>
 
-        <div class="gdpr-container" style="display: flex; align-items: flex-start; gap: 8px;">
-            <input type="checkbox" id="GDPR" name="GDPR">
-            <label for="GDPR">Jag godkänner att min data lagras i enlighet med GDPR</label>
-            <span id="gdprError" style="color: red; font-size: 0.9em; display: none;">
-                (Du måste godkänna)
-            </span>
+        <div class="gdpr-container" style="display: flex; align-items: flex-start; gap: 8px; margin-top: 8px;">
+            <input type="checkbox" id="GDPR" name="GDPR" style="margin-top: 3px;">
+            <div>
+                <label for="GDPR">Jag godkänner att min data lagras i enlighet med GDPR</label>
+                <span id="gdprError" style="color: red; font-size: 0.9em; display: none; margin-left: 6px;">
+                    (Du måste godkänna)
+                </span>
+            </div>
         </div>
 
         <button type="submit">Skicka</button>
@@ -87,12 +89,13 @@ document.getElementById("contactForm").addEventListener("submit", function(event
 
     if (!gdprCheck.checked) {
         event.preventDefault(); // stoppa formuläret
-        gdprError.style.display = "inline"; // visa felmeddelandet på samma rad
+        gdprError.style.display = "inline"; // visa felmeddelandet
     } else {
-        gdprError.style.display = "none"; // göm felmeddelandet om allt är okej
+        gdprError.style.display = "none"; // göm felmeddelandet
     }
 });
 </script>
+
                 </div>
             </div>
         </section>
