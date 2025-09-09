@@ -55,55 +55,85 @@
                     
                    <div class="contact-form">
   <h3>Kontaktformulär</h3>
-  <form
-    id="contactForm"
-    action="https://formspree.io/f/meolnqvb"
-    method="POST"
-  >
-    <label>
+
+  <form id="contactForm" action="https://formspree.io/f/meolnqvb" method="POST" novalidate>
+    <label class="field">
       Ange din mejladress
       <input type="email" name="email" required>
     </label>
 
-    <label>
+    <label class="field">
       Ange ditt telefonnummer
       <textarea name="message" required></textarea>
     </label>
 
-    <!-- GDPR: checkbox + text snyggt i linje -->
-    <div style="margin-top:8 px;">
-      <input type="checkbox" id="GDPR" name="GDPR" style="vertical-align: flex-start; margin-right:6 px;">
-      <label for="GDPR" style="display:inline; vertical-align: flex-start;">
+    <!-- GDPR-rad: placeras dynamiskt så checkboxen börjar under textarea-starten -->
+    <div id="gdprContainer" style="display:flex; align-items:center; gap:6px; margin-top:8px;">
+      <input id="GDPR" name="GDPR" type="checkbox" style="margin:0; vertical-align:middle;">
+      <label for="GDPR" style="margin:0; line-height:1.2;">
         Jag godkänner att min data lagras i enlighet med GDPR
       </label>
-      <span id="gdprError" style="display:none; margin-left:6 px; color:#c62828; font-size:0.9 em;">
+      <span id="gdprError" style="display:none; color:#c62828; font-size:0.9em; margin-left:8px;">
         (Du måste godkänna)
       </span>
     </div>
 
-    <button type="submit">Skicka</button>
+    <button type="submit" style="margin-top:12px;">Skicka</button>
   </form>
 </div>
 
 <script>
-  const form = document.getElementById("contactForm");
-  const gdprCheck = document.getElementById("GDPR");
-  const gdprError = document.getElementById("gdprError");
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contactForm');
+  const textarea = form.querySelector('textarea');
+  const gdprContainer = document.getElementById('gdprContainer');
+  const gdprCheck = document.getElementById('GDPR');
+  const gdprError = document.getElementById('gdprError');
 
-  form.addEventListener("submit", function (event) {
+  // Funktion som placerar gdpr-raden så att den börjar i samma x-position som textarea
+  function alignGdprRow() {
+    if (!textarea || !gdprContainer || !form) return;
+
+    // beräkna vänsterkanten för textarea relativt formuläret
+    const textareaRect = textarea.getBoundingClientRect();
+    const formRect = form.getBoundingClientRect();
+    const left = Math.max(0, textareaRect.left - formRect.left);
+
+    // om formulärets bredd är liten (mobil), lägg tillbaka till 0 för att undvika overflow
+    if (form.clientWidth < 420) {
+      gdprContainer.style.marginLeft = '0px';
+      gdprContainer.style.flexWrap = 'wrap';
+      return;
+    }
+
+    gdprContainer.style.marginLeft = left + 'px';
+    gdprContainer.style.flexWrap = 'nowrap';
+  }
+
+  // Kör vid start och vid storleksändring
+  alignGdprRow();
+  window.addEventListener('resize', alignGdprRow);
+
+  // Validering: visa röd text om inte ikryssad
+  form.addEventListener('submit', function (e) {
     if (!gdprCheck.checked) {
-      event.preventDefault();
-      gdprError.style.display = "inline";
+      e.preventDefault();
+      gdprError.style.display = 'inline';
       gdprCheck.focus();
+      // säkerställ att raden ligger rätt (kan behövas om fokus scrollar)
+      alignGdprRow();
     } else {
-      gdprError.style.display = "none";
+      gdprError.style.display = 'none';
     }
   });
 
-  gdprCheck.addEventListener("change", function () {
-    if (gdprCheck.checked) gdprError.style.display = "none";
+  // Dölj feltext så fort användaren kryssar i
+  gdprCheck.addEventListener('change', function () {
+    if (gdprCheck.checked) gdprError.style.display = 'none';
   });
+});
 </script>
+
 
 
                 </div>
