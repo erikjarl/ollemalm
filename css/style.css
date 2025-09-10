@@ -1,4 +1,5 @@
 
+
 /* 
  * Olof Halm Psykoterapi - Style Sheet
  * A minimalist design with earth tone colors
@@ -338,12 +339,7 @@ nav a.active {
 }
 
 .contact-form {
-  display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-lg)
-    flex: 1;
-    min-width: 300px;
-    margin-bottom: var(--spacing-sm);
+  
 
 }
 .contact-content {
