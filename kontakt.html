@@ -56,19 +56,24 @@
                     
                    <div class="contact-form">
   <h3>Kontaktformulär</h3>
+  <p>Om du är intresserad att boka en första tid på min bokning kan du skicka dina kontaktuppgifter till mig så tar jag kontakt med dig inom kort. Läs mer om jag hanterar dina uppgifter i enlighet med GDPR via <a href=https://www.imy.se/verksamhet/dataskydd/det-har-galler-enligt-gdpr/> denna länk.</a> </p>
   <form
     id="contactForm"
     action="https://formspree.io/f/meolnqvb"
     method="POST"
   >
     <label>
-      Ange din mejladress
+      Namn
+      <input type="name" name="name" required>
+    </label>
+    <label>
+      Mejladress
       <input type="email" name="email" required>
     </label>
 
     <label>
-      Ange ditt telefonnummer
-      <textarea name="message" required></textarea>
+      Telefon
+      <input type="phonenumber" name="phonenumber" required>
     </label>
 
     <!-- GDPR: checkbox + text + felmeddelande på SAMMA rad utan onödigt mellanrum -->
