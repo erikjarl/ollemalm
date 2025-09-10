@@ -338,6 +338,16 @@ nav a.active {
     padding: var(--spacing-xl) 0;
 }
 
+input[type="checkbox"] {
+  opacity: 1;
+  flex-shrink: 0;
+  position: static;
+  appearance: checkbox;
+  -webkit-appearance: checkbox;
+  display: block;
+  
+  }
+  
 .contact-form {
   
 
