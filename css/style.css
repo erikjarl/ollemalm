@@ -341,10 +341,11 @@ nav a.active {
 input[type="checkbox"] {
   opacity: 1;
   flex-shrink: 0;
-  position: static;
+  position: relative;
   appearance: checkbox;
   -webkit-appearance: checkbox;
   display: block;
+  z-index: 99999;
   
   }
   
