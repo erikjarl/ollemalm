@@ -1,5 +1,6 @@
 
 
+
 /* 
  * Olof Halm Psykoterapi - Style Sheet
  * A minimalist design with earth tone colors
@@ -17,7 +18,7 @@
     --text-color: #333333; /* Dark gray for text */
     
     /* Typography */
-    --heading-font:'Playfair display','Cormorant Garamond', serif, ;
+    --heading-font: 'Playfair Display','Cormorant Garamond', serif;
     --body-font: 'Montserrat', sans-serif;
     
     /* Spacing */
